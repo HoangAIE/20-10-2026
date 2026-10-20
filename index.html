@@ -30,7 +30,7 @@
   <canvas id="bg-canvas"></canvas>
 
   <!-- Floating Audio Controller: Nút điều khiển nhạc góc phải trên cùng -->
-  <div class="audio-control-wrap" id="audio-btn" title="Bật / Tắt Nhạc nền">
+  <div class="audio-control-wrap" id="audio-btn" role="button" aria-label="Bật hoặc tắt nhạc nền" title="Bật / Tắt Nhạc nền">
     <div class="vinyl-disc" id="vinyl-disc">
       <div class="disc-groove"></div>
       <div class="disc-label">🌸</div>
@@ -38,11 +38,13 @@
     <div class="sound-wave" id="sound-wave">
       <span></span><span></span><span></span><span></span>
     </div>
+    <span class="audio-btn-text" id="audio-btn-text">Bật nhạc</span>
   </div>
 
-  <!-- Audio Element (Tự động phát sau khi người dùng bấm Mở Quà) -->
-  <audio id="bgm" loop preload="auto">
-    <source src="./music/rio.m4a" type="audio/mpeg">
+  <!-- Audio Element: Tối ưu tương thích 100% mọi dòng điện thoại iOS (iPhone) & Android -->
+  <audio id="bgm" loop preload="auto" playsinline webkit-playsinline>
+    <source src="./music/rio.mp3" type="audio/mpeg">
+    <source src="./music/rio.m4a" type="audio/mp4">
   </audio>
 
   <!-- ======================================================== -->
@@ -154,6 +156,12 @@
             <span id="display-name" class="name-highlight recipient-name">Bạn Xinh Đẹp</span> 🌸
           </h2>
           <div class="stars-row">✦ ✧ 💖 ✧ ✦</div>
+        </div>
+        
+        <!-- Thanh gợi ý âm thanh thân thiện cho người dùng điện thoại / iPhone -->
+        <div class="sound-tip-pill" id="sound-tip-pill" role="button" title="Chạm để bật / tắt nhạc">
+          <span class="sound-tip-icon">🎵</span>
+          <span class="sound-tip-msg">Không nghe thấy nhạc? <b>Chạm vào đây</b> hoặc kiểm tra nút gạt im lặng trên iPhone nha!</span>
         </div>
 
         <!-- Khu vực lời chúc hiệu ứng gõ chữ (Typewriter Effect) -->

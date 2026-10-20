@@ -73,9 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const typewriterCursor = document.getElementById('typewriter-cursor');
 
   const audioBtn = document.getElementById('audio-btn');
+  const audioBtnText = document.getElementById('audio-btn-text');
   const vinylDisc = document.getElementById('vinyl-disc');
   const soundWave = document.getElementById('sound-wave');
   const bgm = document.getElementById('bgm');
+  const soundTipPill = document.getElementById('sound-tip-pill');
 
   const btnMoreLove = document.getElementById('btn-more-love');
   const btnReplay = document.getElementById('btn-replay');
@@ -202,10 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (!webAudioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
-        webAudioCtx = new AudioContext();
+        if (AudioContext) {
+          webAudioCtx = new AudioContext();
+        }
       }
-      if (webAudioCtx.state === 'suspended') {
-        webAudioCtx.resume();
+      if (webAudioCtx && webAudioCtx.state === 'suspended') {
+        webAudioCtx.resume().catch(() => {});
       }
 
       // Giai điệu hộp âm nhạc (Music Box) êm dịu phong cách Chiikawa
@@ -215,25 +219,29 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
       let noteIdx = 0;
 
-      if (!webAudioInterval) {
+      if (!webAudioInterval && webAudioCtx) {
         webAudioInterval = setInterval(() => {
           if (!isAudioPlaying || !webAudioCtx) return;
-          const osc = webAudioCtx.createOscillator();
-          const gain = webAudioCtx.createGain();
+          try {
+            const osc = webAudioCtx.createOscillator();
+            const gain = webAudioCtx.createGain();
 
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(melodyNotes[noteIdx], webAudioCtx.currentTime);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(melodyNotes[noteIdx], webAudioCtx.currentTime);
 
-          gain.gain.setValueAtTime(0.08, webAudioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, webAudioCtx.currentTime + 1.2);
+            gain.gain.setValueAtTime(0.08, webAudioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, webAudioCtx.currentTime + 1.2);
 
-          osc.connect(gain);
-          gain.connect(webAudioCtx.destination);
+            osc.connect(gain);
+            gain.connect(webAudioCtx.destination);
 
-          osc.start();
-          osc.stop(webAudioCtx.currentTime + 1.2);
+            osc.start();
+            osc.stop(webAudioCtx.currentTime + 1.2);
 
-          noteIdx = (noteIdx + 1) % melodyNotes.length;
+            noteIdx = (noteIdx + 1) % melodyNotes.length;
+          } catch (err) {
+            console.warn("Lỗi nốt synthesizer:", err);
+          }
         }, 420);
       }
     } catch (e) {
@@ -253,21 +261,64 @@ document.addEventListener('DOMContentLoaded', () => {
     if (playing) {
       vinylDisc.classList.add('spinning');
       soundWave.classList.add('playing');
+      if (audioBtnText) audioBtnText.textContent = 'Tắt nhạc';
+      if (soundTipPill) {
+        soundTipPill.classList.add('playing');
+        soundTipPill.innerHTML = '<span class="sound-tip-icon">🎶</span><span class="sound-tip-msg">Đang phát nhạc nền • Chạm để tắt nếu muốn</span>';
+      }
     } else {
       vinylDisc.classList.remove('spinning');
       soundWave.classList.remove('playing');
+      if (audioBtnText) audioBtnText.textContent = 'Bật nhạc';
+      if (soundTipPill) {
+        soundTipPill.classList.remove('playing');
+        soundTipPill.innerHTML = '<span class="sound-tip-icon">🎵</span><span class="sound-tip-msg">Không nghe thấy nhạc? <b>Chạm vào đây</b> hoặc kiểm tra nút gạt im lặng trên iPhone nha!</span>';
+      }
     }
   }
 
   function playBGM() {
     if (!bgm) return;
-    bgm.play()
-      .then(() => {
-        setAudioVisualState(true);
-      })
-      .catch((err) => {
-        console.log("Audio play error, fallback to click:", err);
-      });
+
+    // Đánh thức Web Audio Context nếu đang ở trạng thái suspended (đặc biệt trên iOS Safari)
+    if (webAudioCtx && webAudioCtx.state === 'suspended') {
+      webAudioCtx.resume().catch(() => {});
+    }
+
+    // Đảm bảo không bị mute
+    bgm.muted = false;
+
+    const playPromise = bgm.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setAudioVisualState(true);
+        })
+        .catch((err) => {
+          console.warn("Chính sách Autoplay của điện thoại yêu cầu cử chỉ chạm để kích hoạt:", err);
+          setAudioVisualState(false);
+
+          // Tạo listener một lần trên window: Ngay khi người dùng chạm vào màn hình sẽ lập tức mở khóa âm thanh
+          const resumeOnTouch = () => {
+            bgm.play()
+              .then(() => {
+                setAudioVisualState(true);
+              })
+              .catch(() => {
+                // Nếu file media vẫn bị chặn hoặc lỗi định dạng, chuyển sang Web Audio Synthesizer
+                startMusicBoxSynthesizer();
+                setAudioVisualState(true);
+              });
+            window.removeEventListener('touchstart', resumeOnTouch);
+            window.removeEventListener('touchend', resumeOnTouch);
+            window.removeEventListener('click', resumeOnTouch);
+          };
+
+          window.addEventListener('touchstart', resumeOnTouch, { once: true, passive: true });
+          window.addEventListener('touchend', resumeOnTouch, { once: true });
+          window.addEventListener('click', resumeOnTouch, { once: true });
+        });
+    }
   }
 
   function pauseBGM() {
@@ -288,9 +339,35 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bgm) {
     bgm.addEventListener('play', () => setAudioVisualState(true));
     bgm.addEventListener('pause', () => setAudioVisualState(false));
+
+    // Dự phòng khi tệp âm thanh gặp sự cố tải
+    bgm.addEventListener('error', (e) => {
+      console.warn("Lỗi tải tệp âm thanh HTML5, chuyển đổi dự phòng:", e);
+      if (!bgm.src.endsWith('rio.mp3')) {
+        bgm.src = './music/rio.mp3';
+        bgm.load();
+        if (isAudioPlaying) {
+          bgm.play().catch(() => startMusicBoxSynthesizer());
+        }
+      } else {
+        startMusicBoxSynthesizer();
+      }
+    });
   }
 
-  audioBtn.addEventListener('click', toggleAudio);
+  // Gắn sự kiện cho nút đĩa than góc phải
+  audioBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleAudio();
+  });
+
+  // Gắn sự kiện cho thanh gợi ý âm thanh trên thiệp chúc
+  if (soundTipPill) {
+    soundTipPill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleAudio();
+    });
+  }
 
   // ========================================================
   // 5. URL PARAMETERS (HỖ TRỢ ?name=...)
@@ -301,9 +378,15 @@ document.addEventListener('DOMContentLoaded', () => {
     nameInput.value = nameParam.trim();
   }
 
-  // ========================================================
-  // 6. KIỂM TRA ĐẦU VÀO & CHUYỂN ĐỔI BIỂU CẢM CHIIKAWA GIF
-  // ========================================================
+  // Preload âm thanh sớm khi người dùng chạm hoặc tương tác vào ô nhập tên
+  const preloadAudioEarly = () => {
+    if (bgm && bgm.readyState === 0) {
+      bgm.load();
+    }
+  };
+  nameInput.addEventListener('focus', preloadAudioEarly, { once: true });
+  nameInput.addEventListener('touchstart', preloadAudioEarly, { once: true, passive: true });
+
   nameInput.addEventListener('input', () => {
     errorMsg.classList.add('hidden');
     chiikawaAvatar.src = './images/chiikawa-welcome.gif';
@@ -343,11 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
       el.textContent = currentRecipientName;
     });
 
-    // 1. Bắn pháo hoa giấy & ánh sao chào mừng
-    fireBigConfetti();
-
-    // 2. Bắt đầu phát nhạc BGM
+    // 1. Phát nhạc NGAY LẬP TỨC trong user gesture (đảm bảo iOS Safari / Chrome mobile cho phép phát)
     playBGM();
+
+    // 2. Bắn pháo hoa giấy & ánh sao chào mừng
+    fireBigConfetti();
 
     // 3. Chuyển cảnh SPA mượt mà từ Trang 1 sang Trang 2
     welcomeView.classList.remove('active');
@@ -363,6 +446,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. BƯỚC ĐỆM: MỞ PHONG BÌ THƯ BÍ MẬT (ENVELOPE MODAL)
   // ========================================================
   envelopeOverlay.addEventListener('click', () => {
+    // Nếu nhạc chưa phát (do hạn chế autoplay ở bước trước), kích hoạt ngay bằng cử chỉ chạm mở phong bì
+    if (!isAudioPlaying) {
+      playBGM();
+    }
+
     envelopeBox.classList.add('open');
 
     setTimeout(() => {
