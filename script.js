@@ -261,15 +261,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function playBGM() {
     if (!bgm) return;
-
     bgm.play()
       .then(() => {
         setAudioVisualState(true);
       })
       .catch((err) => {
-        console.log("Kích hoạt Music Box Synthesizer:", err);
-        setAudioVisualState(true);
-        startMusicBoxSynthesizer();
+        console.log("Audio play error, fallback to click:", err);
       });
   }
 
@@ -285,6 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       playBGM();
     }
+  }
+
+  // Lắng nghe sự kiện audio kết thúc hoặc tạm dừng
+  if (bgm) {
+    bgm.addEventListener('play', () => setAudioVisualState(true));
+    bgm.addEventListener('pause', () => setAudioVisualState(false));
   }
 
   audioBtn.addEventListener('click', toggleAudio);
