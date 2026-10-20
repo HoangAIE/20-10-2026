@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <filter id="sticker-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5C4033" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Group: Hachiware (Left) -->
+  <g transform="translate(15, 30)" filter="url(#sticker-shadow)">
+    <!-- Ears -->
+    <polygon points="25,40 10,12 42,28" fill="#89CFF0" stroke="#5C4033" stroke-width="3"/>
+    <polygon points="75,40 90,12 58,28" fill="#89CFF0" stroke="#5C4033" stroke-width="3"/>
+    <polygon points="23,34 16,19 36,27" fill="#FFE4E8"/>
+    <polygon points="77,34 84,19 64,27" fill="#FFE4E8"/>
+    <!-- Body -->
+    <path d="M 12 70 C 8 105 22 125 50 125 C 78 125 92 105 88 70 C 88 45 80 32 50 32 C 20 32 12 45 12 70 Z" 
+          fill="#FFFDF9" stroke="#5C4033" stroke-width="3"/>
+    <!-- Blue Bangs (Iconic Hachiware Blue Pattern) -->
+    <path d="M 18 42 C 26 34 38 32 50 42 C 62 32 74 34 82 42 C 84 52 82 60 76 60 C 65 60 55 46 50 50 C 45 46 35 60 24 60 C 18 60 16 52 18 42 Z" 
+          fill="#89CFF0"/>
+    <!-- Feet -->
+    <ellipse cx="36" cy="125" rx="8" ry="6" fill="#FFFDF9" stroke="#5C4033" stroke-width="3"/>
+    <ellipse cx="64" cy="125" rx="8" ry="6" fill="#FFFDF9" stroke="#5C4033" stroke-width="3"/>
+    <!-- Hands -->
+    <ellipse cx="28" cy="88" rx="7" ry="6" fill="#FFFDF9" stroke="#5C4033" stroke-width="2.5"/>
+    <ellipse cx="72" cy="88" rx="7" ry="6" fill="#FFFDF9" stroke="#5C4033" stroke-width="2.5"/>
+    <!-- Cheeks -->
+    <ellipse cx="26" cy="74" rx="7" ry="5" fill="#FFB7C5" opacity="0.8"/>
+    <ellipse cx="74" cy="74" rx="7" ry="5" fill="#FFB7C5" opacity="0.8"/>
+    <!-- Eyes -->
+    <circle cx="34" cy="65" r="4.5" fill="#3D271D"/>
+    <circle cx="33" cy="63.5" r="1.8" fill="#FFFFFF"/>
+    <circle cx="66" cy="65" r="4.5" fill="#3D271D"/>
+    <circle cx="65" cy="63.5" r="1.8" fill="#FFFFFF"/>
+    <!-- Nose & Smile -->
+    <circle cx="50" cy="68" r="1.8" fill="#3D271D"/>
+    <path d="M 45 72 Q 47.5 76 50 73 Q 52.5 76 55 72" fill="none" stroke="#5C4033" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Group: Usagi (Right) -->
+  <g transform="translate(125, 10)" filter="url(#sticker-shadow)">
+    <!-- Long Rabbit Ears -->
+    <path d="M 28 50 C 22 25 22 2 34 2 C 42 2 40 25 38 50 Z" fill="#FDFD96" stroke="#5C4033" stroke-width="3"/>
+    <path d="M 30 42 C 26 25 26 10 33 10 C 37 10 36 25 35 42 Z" fill="#FFCCD5"/>
+    <path d="M 62 50 C 60 25 58 2 68 2 C 78 2 78 25 72 50 Z" fill="#FDFD96" stroke="#5C4033" stroke-width="3"/>
+    <path d="M 64 42 C 63 25 62 10 68 10 C 73 10 73 25 70 42 Z" fill="#FFCCD5"/>
+    <!-- Body -->
+    <path d="M 14 85 C 10 120 25 142 52 142 C 79 142 94 120 90 85 C 90 62 80 50 52 50 C 24 50 14 62 14 85 Z" 
+          fill="#FDFD96" stroke="#5C4033" stroke-width="3"/>
+    <!-- Feet -->
+    <ellipse cx="38" cy="142" rx="9" ry="6" fill="#FDFD96" stroke="#5C4033" stroke-width="3"/>
+    <ellipse cx="66" cy="142" rx="9" ry="6" fill="#FDFD96" stroke="#5C4033" stroke-width="3"/>
+    <!-- Hands raised up (Yaha pose!) -->
+    <ellipse cx="14" cy="72" rx="7" ry="9" fill="#FDFD96" stroke="#5C4033" stroke-width="2.5" transform="rotate(-30 14 72)"/>
+    <ellipse cx="90" cy="72" rx="7" ry="9" fill="#FDFD96" stroke="#5C4033" stroke-width="2.5" transform="rotate(30 90 72)"/>
+    <!-- Cheeks -->
+    <ellipse cx="28" cy="90" rx="8" ry="5" fill="#FFB7C5" opacity="0.85"/>
+    <ellipse cx="76" cy="90" rx="8" ry="5" fill="#FFB7C5" opacity="0.85"/>
+    <!-- Eyes (Energetic narrow/determined cute eyes) -->
+    <circle cx="36" cy="80" r="4.5" fill="#3D271D"/>
+    <circle cx="35" cy="78.5" r="1.8" fill="#FFFFFF"/>
+    <circle cx="68" cy="80" r="4.5" fill="#3D271D"/>
+    <circle cx="67" cy="78.5" r="1.8" fill="#FFFFFF"/>
+    <!-- Eyebrows (Usagi angry-cute slant) -->
+    <line x1="31" y1="72" x2="40" y2="74" stroke="#5C4033" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="73" y1="72" x2="64" y2="74" stroke="#5C4033" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Mouth (Open singing 'HA!' / triangle) -->
+    <path d="M 47 88 Q 52 85 57 88 Q 52 98 47 88 Z" fill="#FF6B8B" stroke="#5C4033" stroke-width="2"/>
+    <ellipse cx="52" cy="92" rx="3" ry="2" fill="#FF3366"/>
+  </g>
+
+  <!-- Heart held in center between them -->
+  <g transform="translate(100, 105) scale(0.65)">
+    <path d="M 32 15 C 32 5 22 0 16 0 C 7 0 0 10 0 20 C 0 35 24 50 32 56 C 40 50 64 35 64 20 C 64 10 57 0 48 0 C 42 0 32 5 32 15 Z" 
+          fill="#FF8DA1" stroke="#5C4033" stroke-width="3"/>
+    <text x="32" y="32" font-family="'Quicksand', sans-serif" font-weight="bold" font-size="14" fill="#FFF" text-anchor="middle">20/10</text>
+  </g>
+</svg>

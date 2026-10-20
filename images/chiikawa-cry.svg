@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Crying Tears Droplets & Splashes -->
+  <g fill="#76C4F3" opacity="0.85">
+    <ellipse cx="40" cy="125" rx="5" ry="9" transform="rotate(-30 40 125)"/>
+    <ellipse cx="28" cy="138" rx="4" ry="7" transform="rotate(-40 28 138)"/>
+    <ellipse cx="160" cy="125" rx="5" ry="9" transform="rotate(30 160 125)"/>
+    <ellipse cx="172" cy="138" rx="4" ry="7" transform="rotate(40 172 138)"/>
+  </g>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="180" rx="55" ry="12" fill="#F3D5DC" opacity="0.6"/>
+  <!-- Ears (Drooping slightly) -->
+  <circle cx="60" cy="76" r="17" fill="#FFFDF9" stroke="#5C4033" stroke-width="3.5"/>
+  <circle cx="60" cy="76" r="9" fill="#FFE4E8"/>
+  <circle cx="140" cy="76" r="17" fill="#FFFDF9" stroke="#5C4033" stroke-width="3.5"/>
+  <circle cx="140" cy="76" r="9" fill="#FFE4E8"/>
+  <!-- Body -->
+  <path d="M 50 120 C 45 155 60 175 100 175 C 140 175 155 155 150 120 C 150 95 140 70 100 70 C 60 70 50 95 50 120 Z" 
+        fill="#FFFDF9" stroke="#5C4033" stroke-width="3.5"/>
+  <!-- Feet -->
+  <ellipse cx="78" cy="176" rx="12" ry="8" fill="#FFFDF9" stroke="#5C4033" stroke-width="3.5"/>
+  <ellipse cx="122" cy="176" rx="12" ry="8" fill="#FFFDF9" stroke="#5C4033" stroke-width="3.5"/>
+  <!-- Trembling Hands Clenched at Chest -->
+  <ellipse cx="80" cy="142" rx="10" ry="8" fill="#FFFDF9" stroke="#5C4033" stroke-width="3" transform="rotate(25 80 142)"/>
+  <ellipse cx="120" cy="142" rx="10" ry="8" fill="#FFFDF9" stroke="#5C4033" stroke-width="3" transform="rotate(-25 120 142)"/>
+  <!-- Sweat drop -->
+  <path d="M 148 90 C 148 85 155 80 155 80 C 155 80 162 85 162 90 C 162 94 159 97 155 97 C 151 97 148 94 148 90 Z" fill="#89CFF0" stroke="#5C4033" stroke-width="1.5"/>
+  <!-- Trembling marks -->
+  <path d="M 46 95 L 42 100 L 46 105" fill="none" stroke="#FF8DA1" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 154 95 L 158 100 L 154 105" fill="none" stroke="#FF8DA1" stroke-width="2" stroke-linecap="round"/>
+  <!-- Cheeks -->
+  <ellipse cx="68" cy="126" rx="12" ry="8" fill="#FFB7C5" opacity="0.9"/>
+  <ellipse cx="132" cy="126" rx="12" ry="8" fill="#FFB7C5" opacity="0.9"/>
+  <!-- Watery Crying Eyes with huge glistening highlights -->
+  <!-- Left Eye -->
+  <g>
+    <ellipse cx="76" cy="112" rx="9" ry="11" fill="#3D271D"/>
+    <!-- Watery surface -->
+    <path d="M 68 116 C 68 123 84 123 84 116 Z" fill="#89CFF0"/>
+    <circle cx="73" cy="107" r="3.5" fill="#FFFFFF"/>
+    <circle cx="79" cy="114" r="2" fill="#FFFFFF"/>
+    <!-- Eyebrows (Sad / Drooping) -->
+    <path d="M 68 98 Q 76 102 84 97" fill="none" stroke="#5C4033" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tear stream gushing down -->
+    <path d="M 72 120 C 65 130 55 135 50 145 C 46 153 54 160 58 152 C 64 140 73 130 75 122 Z" fill="#76C4F3" opacity="0.9"/>
+  </g>
+  <!-- Right Eye -->
+  <g>
+    <ellipse cx="124" cy="112" rx="9" ry="11" fill="#3D271D"/>
+    <!-- Watery surface -->
+    <path d="M 116 116 C 116 123 132 123 132 116 Z" fill="#89CFF0"/>
+    <circle cx="121" cy="107" r="3.5" fill="#FFFFFF"/>
+    <circle cx="127" cy="114" r="2" fill="#FFFFFF"/>
+    <!-- Eyebrows (Sad / Drooping) -->
+    <path d="M 116 97 Q 124 102 132 98" fill="none" stroke="#5C4033" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tear stream gushing down -->
+    <path d="M 128 120 C 135 130 145 135 150 145 C 154 153 146 160 142 152 C 136 140 127 130 125 122 Z" fill="#76C4F3" opacity="0.9"/>
+  </g>
+  <!-- Quivering Wavy Sad Mouth -->
+  <circle cx="100" cy="118" r="2" fill="#3D271D"/>
+  <path d="M 92 128 Q 96 123 100 128 Q 104 123 108 128" fill="none" stroke="#5C4033" stroke-width="3" stroke-linecap="round"/>
+</svg>

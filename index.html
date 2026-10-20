@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🌸 Chúc Mừng 20/10 — My Special Gift 🎁</title>
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
+  <!-- Google Fonts tiếng Việt chuẩn aesthetic: Quicksand, Nunito, Mali & Dancing Script -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Thư viện Canvas-Confetti tạo hiệu ứng pháo hoa giấy & tim bay -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <!-- Canvas hiệu ứng nền: Hoa anh đào dịu mát, ngôi sao & ánh sáng lấp lánh (aesthetic & tinh tế) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Floating Audio Controller: Nút điều khiển nhạc góc phải trên cùng -->
+  <div class="audio-control-wrap" id="audio-btn" title="Bật / Tắt Nhạc nền">
+    <div class="vinyl-disc" id="vinyl-disc">
+      <div class="disc-groove"></div>
+      <div class="disc-label">🌸</div>
+    </div>
+    <div class="sound-wave" id="sound-wave">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Audio Element (Tự động phát sau khi người dùng bấm Mở Quà) -->
+  <audio id="bgm" loop preload="auto">
+    <source src="./music/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ======================================================== -->
+  <!-- TRANG 1: MÀN HÌNH CHÀO & NHẬP TÊN (WELCOME SCREEN)       -->
+  <!-- ======================================================== -->
+  <main id="welcome-view" class="view-screen active">
+    <div class="welcome-card card-cute">
+
+      <!-- Họa tiết trang trí góc tinh tế -->
+      <div class="badge-mini-corner">20 • 10</div>
+
+      <!-- Avatar GIF Chiikawa vẫy tay chân thực từ hoạt hình -->
+      <div class="avatar-box">
+        <img id="chiikawa-avatar" src="./images/chiikawa-welcome.gif"
+          onerror="this.onerror=null; this.src='./images/chiikawa-welcome.svg'" alt="Chiikawa vẫy tay chào"
+          class="avatar-gif">
+        <div class="avatar-shadow"></div>
+      </div>
+
+      <!-- Tiêu đề & Lời mở đầu ấm áp -->
+      <div class="welcome-header">
+        <span class="badge-cute">✨ HAPPY VIETNAMESE WOMEN'S DAY ✨</span>
+        <h1 class="welcome-title">Ú òa! Có một món quà bí mật đang đợi bạn nè~</h1>
+        <p class="welcome-subtitle">Tớ đã chuẩn bị điều bất ngờ này cho riêng bạn đó!</p>
+      </div>
+
+      <!-- Form nhập tên -->
+      <div class="input-form">
+        <div class="input-group" id="input-wrapper">
+          <span class="input-icon">✨</span>
+          <input type="text" id="name-input" class="cute-input" placeholder="Nhập tên xinh đẹp của bạn vào đây nha..."
+            maxlength="30" autocomplete="off" spellcheck="false">
+        </div>
+
+        <!-- Thông báo lỗi ngộ nghĩnh kèm GIF Chiikawa khóc khi chưa nhập tên -->
+        <div id="error-msg" class="error-bubble hidden">
+          <span class="error-emoji">🥺</span>
+          <span class="error-text">Ơ kìa, chưa nhập tên thì làm sao tớ biết gửi quà cho ai đây~</span>
+        </div>
+
+        <!-- Nút bấm mở quà -->
+        <button id="btn-open-gift" class="btn-main-cute wiggle-anim">
+          <span class="btn-sparkle">🎁</span>
+          <span class="btn-text">Mở quà 20/10 ngay nha</span>
+          <span class="btn-sparkle">✨</span>
+        </button>
+      </div>
+
+      <!-- Thanh hoạt hình sinh động ở chân card chào mừng -->
+      <div class="welcome-troupe-bar">
+        <img src="./images/walktogether.gif" alt="Chiikawa and Hachiware" class="troupe-gif">
+        <span class="troupe-hint">Tớ đang háo hức chờ bạn mở quà nè~</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- TRANG 2: TRANG THIỆP & TRIỂN LÃM ẢNH (GREETING & GALLERY)-->
+  <!-- ======================================================== -->
+  <section id="greeting-view" class="view-screen hidden">
+
+    <!-- Bước đệm: Chiếc phong bì thư bí mật mở ra -->
+    <div id="envelope-overlay" class="envelope-modal">
+      <div class="envelope-wrapper" id="envelope-box">
+        <div class="envelope-back"></div>
+        <div class="envelope-card-preview">
+          <span class="preview-text">🌸 Thư Chúc Mừng 20/10 🌸</span>
+        </div>
+        <div class="envelope-front">
+          <div class="stamp-box">
+            <span class="stamp-wax">💌</span>
+          </div>
+          <div class="envelope-to">
+            <p class="to-label">Kính gửi:</p>
+            <p class="to-name recipient-name">Bạn Xinh Đẹp</p>
+          </div>
+        </div>
+        <div class="envelope-flap" id="envelope-flap"></div>
+      </div>
+      <p class="envelope-hint">👆 Chạm nhẹ vào phong bì để mở thiệp nha~ ✨</p>
+    </div>
+
+    <!-- Nội dung chính sau khi mở phong bì: Thiệp và Triển lãm ảnh -->
+    <div class="content-scroll-container" id="main-content-area">
+      <div class="greeting-card card-cute">
+
+        <!-- Biệt đội Chiikawa, Hachiware, Usagi nhảy múa ăn mừng rộn ràng phía trên thiệp -->
+        <div class="celebration-squad">
+          <div class="squad-member">
+            <img src="./images/hachiware-jump.gif" alt="Hachiware nhảy múa" class="squad-gif" title="Hachiware">
+
+          </div>
+          <div class="squad-member squad-main">
+            <img src="./images/chiikawa-jump.gif" alt="Chiikawa nhảy mừng" class="squad-gif" title="Chiikawa">
+
+          </div>
+          <div class="squad-member">
+            <img src="./images/usagi-jump.gif" alt="Usagi nhảy múa" class="squad-gif" title="Usagi">
+
+          </div>
+        </div>
+
+        <!-- Header lời chúc & Ngày kỷ niệm -->
+        <div class="greeting-header">
+          <div class="date-badge">20 • 10 • 2026 • NGÀY PHỤ NỮ VIỆT NAM</div>
+          <h2 class="greeting-title">
+            Chúc Mừng 20/10,
+            <span id="display-name" class="name-highlight recipient-name">Bạn Xinh Đẹp</span> 🌸
+          </h2>
+          <div class="stars-row">✦ ✧ 💖 ✧ ✦</div>
+        </div>
+
+        <!-- Khu vực lời chúc hiệu ứng gõ chữ (Typewriter Effect) -->
+        <div class="letter-box">
+          <div class="letter-paper">
+            <div class="letter-stamp">
+              <img src="./images/chiikawa-welcome.gif"
+                onerror="this.onerror=null; this.src='./images/chiikawa-welcome.svg'" alt="stamp" class="mini-stamp">
+            </div>
+            <!-- Chữ sẽ tự động gõ ra tại đây -->
+            <div id="typewriter-text" class="typewriter-content"></div>
+            <span id="typewriter-cursor" class="typing-cursor">|</span>
+          </div>
+        </div>
+
+        <!-- Triển lãm ảnh Polaroid (Polaroid Memories Gallery) -->
+        <div class="gallery-section">
+          <div class="gallery-title-wrap">
+            <span class="gallery-icon">📸</span>
+            <h3 class="gallery-title">Những Khoảnh Khắc Tỏa Sáng Nhất</h3>
+            <span class="gallery-icon">✨</span>
+          </div>
+          <p class="gallery-sub">Di chuột hoặc chạm vào từng bức ảnh để ngắm rõ hơn nhé!</p>
+
+          <div class="polaroid-grid">
+
+            <!-- Khung ảnh 1 (Nghiêng nhẹ sang trái) -->
+            <div class="polaroid-item item-1">
+              <div class="pin-tape tape-warm"></div>
+              <div class="polaroid-inner">
+                <div class="img-wrapper">
+                  <img src="./1.jpg" onerror="this.onerror=null; this.src='./images/photo1.jpg'" alt="Khoảnh khắc 1"
+                    class="polaroid-img" loading="lazy">
+                </div>
+                <p class="polaroid-caption">Rạng rỡ như ánh mặt trời ☀️</p>
+              </div>
+            </div>
+
+            <!-- Khung ảnh 2 (Nghiêng nhẹ sang phải) -->
+            <div class="polaroid-item item-2">
+              <div class="pin-tape tape-sage"></div>
+              <div class="polaroid-inner">
+                <div class="img-wrapper">
+                  <img src="./2.jpg" onerror="this.onerror=null; this.src='./images/photo2.jpg'" alt="Khoảnh khắc 2"
+                    class="polaroid-img" loading="lazy">
+                </div>
+                <p class="polaroid-caption">Mỗi nụ cười là một đóa hoa 🌸</p>
+              </div>
+            </div>
+
+            <!-- Khung ảnh 3 (Nghiêng nhẹ sang trái) -->
+            <div class="polaroid-item item-3">
+              <div class="pin-tape tape-butter"></div>
+              <div class="polaroid-inner">
+                <div class="img-wrapper">
+                  <img src="./3.webp" onerror="this.onerror=null; this.src='./images/photo3.jpg'" alt="Khoảnh khắc 3"
+                    class="polaroid-img" loading="lazy">
+                </div>
+                <p class="polaroid-caption">Luôn hạnh phúc & an yên ✨</p>
+              </div>
+            </div>
+
+            <!-- Khung ảnh 4 (Nghiêng nhẹ sang phải) -->
+            <div class="polaroid-item item-4">
+              <div class="pin-tape tape-sky"></div>
+              <div class="polaroid-inner">
+                <div class="img-wrapper">
+                  <img src="./4.jpg" onerror="this.onerror=null; this.src='./images/photo4.jpg'" alt="Khoảnh khắc 4"
+                    class="polaroid-img" loading="lazy">
+                </div>
+                <p class="polaroid-caption">Xinh đẹp và tuyệt vời nhất 💕</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Sticker hoạt hình Chiikawa & Hachiware đi dạo cùng nhau dưới bộ ảnh -->
+          <div class="gallery-sticker-wrap">
+            <img src="./images/walktogether.gif" alt="Hachiware & Chiikawa walk" class="sticker-gif-walk">
+            <span class="sticker-bubble">Yaha! Cậu là điều tuyệt vời nhất đó! 🎉</span>
+          </div>
+        </div>
+
+        <!-- Nút bấm tương tác thêm: Nhận thêm yêu thương -->
+        <div class="extra-actions">
+          <button id="btn-more-love" class="btn-love-cute pulse-anim">
+            <span class="heart-pulse">💖</span>
+            <span>Nhận thêm yêu thương & cổ vũ</span>
+            <span class="heart-pulse">✨</span>
+          </button>
+
+          <div class="button-sub-hint">Bấm vào đây!</div>
+
+          <!-- Nút xem lại từ đầu -->
+          <button id="btn-replay" class="btn-replay-cute">
+            <span>🔄 Xem lại từ đầu</span>
+          </button>
+        </div>
+
+        <!-- Chữ ký ngọt ngào cuối thiệp -->
+        <footer class="card-footer">
+          <p class="footer-sign">₍ᐢ•ﻌ•ᐢ₎</p>
+          <p class="footer-credit">Wishing you a peaceful, joyful & beautiful Vietnamese Women's Day ✨</p>
+        </footer>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Container chứa các bong bóng lời chúc & GIF nhân vật bay khi bấm nút Nhận thêm yêu thương -->
+  <div id="floating-quotes-container" class="floating-container"></div>
+
+  <!-- JavaScript App Logic -->
+  <script src="./script.js"></script>
+</body>
+
+</html>
